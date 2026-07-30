@@ -330,6 +330,13 @@ $ vault write auth/ssh/role/dwd public_keys=@sshkey.pub
 It can also be done with curl or any other http client; see the vault
 documentation for examples.
 
+NOTE: the typical ssh key of type `ssh-rsa` is associated with the sha1
+algorithm at least on EL9, but EL9 and later do not allow the use of sha1
+by default.  This shows up in obscure `error in libcrypto` messages.
+There it is recommended to either use keys of type `ed25519` or to add
+`SHA1` to the machine's crypto policies using the `update-crypto-policies`
+command.
+
 ### Rate limits
 
 Since the number of clients of one Vault service can be very large, and
